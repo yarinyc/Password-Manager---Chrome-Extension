@@ -18,6 +18,7 @@ app.use((_, res, next) => {
 	next();
 });
 
+//data structures for users and userdata
 let users = []; // { name: "XYZ@gmail.com" , password: *******}
 let data = [];  // { name: "XYZ@gmail.com" , passwords: [{domain: ***, userName: ***, password: ***}, {domain: ***, userName: ***, password: ***}, ...]}
 
