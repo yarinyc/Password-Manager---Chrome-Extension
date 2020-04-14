@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+
+	<head>
+		<title>connect</title>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" href="css/connect.css" />
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+		<script src="node_modules/axios/dist/axios.min.js"></script>
+		<script src="js/API.js"></script>
+		<script src="js/connect.js"></script>
+	</head>
+	
+	
+	<body>
+	
+		<!-- Header -->
+		<div class="container" id="header">
+			<img src="password.png" alt="logo">
+			<h3 class="heading"> Password Manager</h3>
+		</div>
+		<hr>
+		
+		<!-- Login Panel -->
+		<div class="container">
+			<!-- Username -->
+			<div class="container">
+				<p id="err"></p>
+				<label class="control-label" for="email">
+					<span class="glyphicon glyphicon-user"></span> Username
+				</label>
+				<div>
+					<input type="text" class="form-control" id="email" placeholder="Enter Username" required>
+                    <p id="errorStatus"></p>
+				</div>
+			</div>
+			
+			<p id="errorStatus"></p>
+			
+			<!-- Password -->
+			<div class="container">
+				<label class="control-label" for="pwd">
+					<span class="glyphicon glyphicon-lock"></span> Password
+				</label>
+				<div>
+					<input type="password" class="form-control" id="pwd" placeholder="Enter Password" required>
+				</div>
+			</div>
+			
+			<!-- Submit -->
+			<div class="buttonSection" id="buttons"> 
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary" id="loginButton">Login</button>
+					<button type="submit" class="btn btn-danger" id="deleteButton">Delete account <span>&#128549;</span></button>
+				</div>
+				<div class="container">
+					<span class="reg">First time? <a href="register_form.html">Register now!</a></span>
+				</div>
+			</div>
+			
+		</div>			
+		
+		<!-- Forgot Password -->
+		<div class="container" id="forgotPassword">
+			<span class="psw"><a href="#">Forgot password?</a></span>
+		</div>
+		
+	</body>
+	
+</html>
+

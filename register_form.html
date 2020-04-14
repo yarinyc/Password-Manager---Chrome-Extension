@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+
+	<head>
+		<title>register_form</title>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" href="css/register_form.css" />
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+		<script src="node_modules/axios/dist/axios.min.js"></script>
+		<script src="js/API.js"></script>
+		<script src="js/register_form.js"></script>
+		
+	</head>
+	
+	
+	<body>
+	
+		<!-- Header -->
+		<div class="container" id="header">
+			<img src="password.png" alt="logo">
+			<h3 class="heading"> Password Manager</h3>
+		</div>
+		<hr>
+		
+		<!-- Sign Up Form -->
+		<div class="container" id="SignUpForm">
+			<p id="err"></p>
+			<div class="form-group">
+				<!-- Username -->
+				<label class="control-label" for="email" name="email">
+					<span class="glyphicon glyphicon-envelope"></span> Email:
+				</label>
+				<div>
+					<input type="text" class="form-control" id="email" placeholder="Enter Email" required> <br>
+				</div>
+				
+				<!-- Password -->
+				<label class="control-label" for="spwd">
+					<span class="glyphicon glyphicon-lock"></span> Password:
+				</label>
+				<div>
+					<input type="password" class="form-control" id="spwd" placeholder="Enter Password" required> <br>
+				</div>	
+					
+				<!-- Repeat Password -->
+				<label class="control-label" for="psw-repeat">
+					<span class="glyphicon glyphicon-lock"></span> Repeat Password:
+				</label>
+				<div>
+					<input type="password" class="form-control" id="psw-repeat" placeholder="Repeat Password" required> <br>
+				</div>	
+				
+				<!-- Main button -->
+
+				<button id="myBtn"><span>&#128272;</span> Generate password</button>
+				 <p>Your password is: 
+				 <span id = "pass_text">  </span>
+				</p>
+				<!-- Submit -->
+				<div> 
+					<input type="submit" value="Submit" id="sbmt">
+				</div>			
+			</div>
+		</div>
+	</body>
+</html>

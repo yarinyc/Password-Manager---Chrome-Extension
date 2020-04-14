@@ -1,0 +1,24 @@
+{
+  "name": "Secured plug-in",
+  "description" : "A secured plug-in to remember passwords",
+  "version": "1.0.0",
+"permissions": [
+		"activeTab",
+		"storage",
+        "tabs"
+    ],
+  "browser_action": {
+    "default_popup": "connect.html",
+    "default_icon": "password.png"
+  },
+  "manifest_version": 2,
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F",
+        "mac": "MacCtrl+Shift+F"
+      },
+      "description": "Opens connect.html"
+    }
+  }
+}

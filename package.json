@@ -1,0 +1,16 @@
+{
+  "name": "chrome-plugin",
+  "version": "1.0.0",
+  "description": "password manager for chrome ()\u001b[Duses encryption to protect data)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bcrypt": "^4.0.1",
+    "express": "^4.17.1"
+  }
+}
