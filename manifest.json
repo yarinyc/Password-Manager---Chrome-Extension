@@ -2,15 +2,26 @@
   "name": "Secured plug-in",
   "description" : "A secured plug-in to remember passwords",
   "version": "1.0.0",
-"permissions": [
-		"activeTab",
-		"storage",
-        "tabs"
-    ],
+  "permissions": [
+      "activeTab",
+      "storage",
+      "tabs",
+      "webNavigation"
+      ],
   "browser_action": {
     "default_popup": "connect.html",
     "default_icon": "password.png"
   },
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
   "manifest_version": 2,
   "commands": {
     "_execute_browser_action": {
