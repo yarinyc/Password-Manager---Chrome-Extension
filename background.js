@@ -19,3 +19,4 @@
 //     const forms = window.document.getElementsByTagName("form")
 //     console.log(forms)
 //  });
+chrome.storage.local.set({'login': 'false'})

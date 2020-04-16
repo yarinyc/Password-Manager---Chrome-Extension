@@ -1,0 +1,28 @@
+body { 
+	min-width: 380px;
+	min-height: 125px;
+}
+#header{
+	margin-top: 8px;
+	text-align: left;
+}
+img {
+	/* float:left; */
+	width:15%;
+	height:15%;
+}
+#err{
+	color: red;
+}
+#deleteButton{
+	margin: 12px;
+}
+
+#buttons{
+	margin-top: 8px;
+	margin-bottom: 15px;
+}
+#forgotPassword {
+	text-align: right;
+	background-color:#f1f1f1;
+}

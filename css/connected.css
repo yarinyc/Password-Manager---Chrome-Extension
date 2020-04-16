@@ -14,15 +14,3 @@ img {
 #err{
 	color: red;
 }
-#deleteButton{
-	margin: 12px;
-}
-
-#buttons{
-	margin-top: 8px;
-	margin-bottom: 15px;
-}
-#forgotPassword {
-	text-align: right;
-	background-color:#f1f1f1;
-}

@@ -1,0 +1,16 @@
+body { 
+	min-width: 380px;
+	min-height: 125px;
+}
+#header{
+	margin-top: 8px;
+	text-align: left;
+}
+img {
+	float:left;
+	width:15%;
+	height:15%;
+}
+#err{
+	color: red;
+}

@@ -11,10 +11,12 @@ login = function () {
     const myObj = {name: email, password: password};
     api.login(myObj).then((res)=>{
         if(res.msg == 'Success'){
-            //err.innerHTML="Logged in";
             let passwords = res.passwords;
-            //window.close();
-            //call function
+            chrome.storage.local.set({'passwords': passwords}, function() {
+                console.log("passwords saved:\n",passwords)
+            });
+            chrome.storage.local.set({'login': 'true'})
+            window.open("../connected.html","_self");
             return;
         }
         err.innerHTML="Couldn't connect";

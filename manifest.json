@@ -5,11 +5,10 @@
   "permissions": [
       "activeTab",
       "storage",
-      "tabs",
-      "webNavigation"
+      "tabs"
       ],
   "browser_action": {
-    "default_popup": "connect.html",
+    "default_popup": "plugin.html",
     "default_icon": "password.png"
   },
   "background": {
@@ -29,7 +28,7 @@
         "default": "Ctrl+Shift+F",
         "mac": "MacCtrl+Shift+F"
       },
-      "description": "Opens connect.html"
+      "description": "Opens login.html"
     }
   }
 }

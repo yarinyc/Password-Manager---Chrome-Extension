@@ -7,7 +7,8 @@ const createApiClient = () => {
         },
 		
 		login: (logInRequest) => {
-			return axios.put(`http://localhost:${port}/api/users/login`, logInRequest).then((res) => res.data);
+			console.log(logInRequest);
+			return axios.post(`http://localhost:${port}/api/users/login`, logInRequest).then((res) => res.data);
 		},
 
 		deleteUser: (deleteRequest) => {
