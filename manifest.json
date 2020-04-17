@@ -1,5 +1,5 @@
 {
-  "name": "Secured plug-in",
+  "name": "Secure plug-in",
   "description" : "A secured plug-in to remember passwords",
   "version": "1.0.0",
   "permissions": [
@@ -28,7 +28,7 @@
         "default": "Ctrl+Shift+F",
         "mac": "MacCtrl+Shift+F"
       },
-      "description": "Opens login.html"
+      "description": "Opens plugin.html"
     }
   }
 }

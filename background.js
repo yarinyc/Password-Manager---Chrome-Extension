@@ -1,22 +1,9 @@
-//document.getElementsByTagName('form')
 
-// chrome.webNavigation.onCompleted.addListener(function() {
-//     alert("test webNavigation");
-// });
 
-// chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-//     console.log(tab.url);
-//  });
+//set initial state for the extension
+chrome.storage.local.set({'login': false})
 
-// chrome.tabs.onActivated.addListener(function(activeInfo) {
-//     // how to fetch tab url using activeInfo.tabid
-//     chrome.tabs.get(activeInfo.tabId, function(tab){
-//        console.log(tab.url);
-//     });
-//   }); 
-
-// chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-//     const forms = window.document.getElementsByTagName("form")
-//     console.log(forms)
-//  });
-chrome.storage.local.set({'login': 'false'})
+//on startup reset state for fresh login requirement
+chrome.runtime.onStartup.addListener(function(){
+    chrome.storage.local.set({'login': false})
+})

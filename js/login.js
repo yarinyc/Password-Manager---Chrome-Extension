@@ -15,7 +15,7 @@ login = function () {
             chrome.storage.local.set({'passwords': passwords}, function() {
                 console.log("passwords saved:\n",passwords)
             });
-            chrome.storage.local.set({'login': 'true'})
+            chrome.storage.local.set({'login': true})
             window.open("../connected.html","_self");
             return;
         }

@@ -52,7 +52,7 @@ app.post('/api/users', async (req, res) => {
 		const user = { name: req.body.name, password: hashedPassword}
 		users.push(user) // add user to users list
 		data.push({name: user.name, passwords: []}) // add new empty entry for user to the data
-		console.log(user)
+		console.log("regiter request:\n",user)
 		res.status(201).send({msg: 'Success'}) //OK - Created
 	} catch {
 	  	res.status(500).send({msg: 'Server Error'}) // Internal Server Error
@@ -62,14 +62,13 @@ app.post('/api/users', async (req, res) => {
 //login: (only for first validation, sends current password file)
 app.post('/api/users/login', async (req, res) => {
 	const user = users.find(user => user.name === req.body.name)
-	console.log(req.body," logged in")
 	if (user == undefined) {
 	  	return res.status(400).send({msg: 'Cannot find user'})
 	}
 	try {
 		if(await bcrypt.compare(req.body.password, user.password)) {
 			const userData = data.find((d)=>d.name === req.body.name)
-			console.log(user.name," logged in")
+			console.log(" logged in successfully:\n",user.name)
 			res.send({msg: 'Success', passwords: userData.passwords})
 		}
 		else {
@@ -82,7 +81,6 @@ app.post('/api/users/login', async (req, res) => {
 
 //delete: delete all data from current user
 app.delete('/api/users', async (req, res) => { 
-	console.log(req.body)
 	const valid = await validateUser(req.body.name, req.body.password)
 	if(!valid){
 		res.send({msg: 'Not Allowed'})
@@ -90,6 +88,7 @@ app.delete('/api/users', async (req, res) => {
 	}
 	users = users.filter((u)=> u.name !== req.body.name)
 	data = data.filter((d)=> d.name !== req.body.name)
+	console.log(" deleted his user:\n",req.body.name)
 	res.status(200).send({msg: 'Deleted'})
 });
 
