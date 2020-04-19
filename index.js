@@ -63,7 +63,7 @@ app.post('/api/users', async (req, res) => {
 app.post('/api/users/login', async (req, res) => {
 	const user = users.find(user => user.name === req.body.name)
 	if (user == undefined) {
-	  	return res.status(400).send({msg: 'Cannot find user'})
+	  	return res.status(209).send({msg: 'Cannot find user'})
 	}
 	try {
 		if(await bcrypt.compare(req.body.password, user.password)) {

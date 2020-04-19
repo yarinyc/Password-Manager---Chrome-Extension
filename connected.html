@@ -5,11 +5,33 @@
 	<head>
 		<title>connect</title>
 		<meta charset="UTF-8" />
-		<link rel="stylesheet" href="css/connected.css" />
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/connected.css" />
+		<script src="js/connected.js"></script>
 	</head>
 
 	<body>
-        <h1>Connected</h1>
+		<!-- Header -->
+		<div class="container" id="header">
+			<img src="password.png" alt="logo">
+			
+				<h3 class="heading"> Password Manager</h3>
+			
+		</div>
+		<hr>
+		<!-- <div class="message">
+			<br>
+			<h2><b>You are connected </b></h2>
+			<br>
+		</div> -->
+		<div class="buttonSection" id="buttons"> 
+			<div class="col-sm-offset-2 col-sm-10">
+				<div> 
+					<button type="submit" id="logoutButton">Logout</button>
+					<br>
+					<br>
+				</div>	
+			</div>	
+		</div>		
     </body>
 </html>
