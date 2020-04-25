@@ -35,7 +35,7 @@ async function validateUser(Username, password) {
 
 //**** debug:
 app.get('/api/users', (req, res) => {
-	res.json(users)
+	res.json({user: users, data: data})
 })
 
 // --> general user requests: register/login
@@ -81,48 +81,64 @@ app.post('/api/users/login', async (req, res) => {
 
 //delete: delete all data from current user
 app.delete('/api/users', async (req, res) => { 
-	const valid = await validateUser(req.body.name, req.body.password)
-	if(!valid){
-		res.send({msg: 'Not Allowed'})
-		return;
-	}
-	users = users.filter((u)=> u.name !== req.body.name)
-	data = data.filter((d)=> d.name !== req.body.name)
-	console.log(" deleted his user:\n",req.body.name)
-	res.status(200).send({msg: 'Deleted'})
+	try{
+		const valid = await validateUser(req.body.name, req.body.password)
+		if(!valid){
+			res.send({msg: 'Not Allowed'})
+			return;
+		}
+		users = users.filter((u)=> u.name !== req.body.name)
+		data = data.filter((d)=> d.name !== req.body.name)
+		console.log(" deleted his user:\n",req.body.name)
+		res.status(200).send({msg: 'Deleted'})
+	} catch {
+		res.status(500).send({msg: 'Server Error'})
+  	}
 });
 
 //specific user requests: add/edit credentials 
 
 //update user's password file:
 //--> req.body = {name, password, passwords}
+//--> req.body.passwords = [ {domain, userName, password }, ... ]
 app.put('/api/data/', async (req, res) => {
-	const valid = await validateUser(req.body.name, req.body.password)
-	if(!valid){
-		res.send({msg: 'Not Allowed'})
-		return;
+	try{
+		const valid = await validateUser(req.body.name, req.body.password)
+		if(!valid){
+			res.send({msg: 'Not Allowed'})
+			return;
+		}
+		const newData = req.body.passwords
+		let userData = data.find((d)=>d.name === req.body.name)
+		userData.passwords = newData // update current password file with the user's file
+		console.log('data recieved:\n', newData)
+		res.status(200).send({msg: 'Success'}) // OK
+	} catch {
+		res.status(500).send({msg: 'Server Error'})
 	}
-	const newData = req.body.passwords
-	let userData = data.find((d)=>d.name === req.body.name)
-	userData.passwords = newData // update current password file with the user's file
-	res.status(200).send({msg: 'Success'}) // OK
+	
 });
 
 //update/add to user's password file for a specific domain:
 //--> req.body = {name, password, userName, userPassword}
 app.put('/api/data/:domain', async (req, res) => {
-	const valid = await validateUser(req.body.name, req.body.password)
-	if(!valid){
-		res.send({msg: 'Not Allowed'})
-		return;
+	try{
+		const valid = await validateUser(req.body.name, req.body.password)
+		if(!valid){
+			res.send({msg: 'Not Allowed'})
+			return;
+		}
+		let userData = data.find((d)=>d.name === req.body.name)
+		let index = userData.passwords.findIndex((e)=>e.domain === req.params.domain)
+		if(index === -1){
+			userData.passwords.push({domain: req.params.domain, userName: req.body.userName, userPassword: req.body.userPassword})
+		}
+		else userData.passwords[index] = {domain: req.params.domain, userName: req.body.userName, userPassword: req.body.userPassword}
+		console.log('data recieved:\n', {domain: req.params.domain, userName: req.body.userName, userPassword: req.body.userPassword})
+		res.status(200).send({msg: "Success"})
+	} catch {
+		res.status(500).send({msg: 'Server Error'})
 	}
-	let userData = data.find((d)=>d.name === req.body.name)
-	let index = userData.passwords.findIndex((e)=>e.domain === req.params.domain)
-	if(index === -1){
-		userData.passwords.push({domain: req.params.domain, userName: req.body.userName, userPassword: req.body.userPassword})
-	}
-	else userData.passwords[index] = {domain: req.params.domain, userName: req.body.userName, userPassword: req.body.userPassword}
-	res.status(200).send({msg: "Success"})
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}...`));
