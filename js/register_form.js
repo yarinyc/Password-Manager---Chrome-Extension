@@ -1,28 +1,25 @@
+
 const api = createApiClient();
 window.onload=function(){
     if (document.getElementById("myBtn"))
-       document.getElementById("myBtn").addEventListener("click", generate);
+       document.getElementById("myBtn").addEventListener("click", generatePassword);
     if (document.getElementById("sbmt")){
         document.getElementById("sbmt").addEventListener("click", submit);
     }
 }
 
-/* TODO: the generator function is not so good.. (sometimes suggest a one letter password)*/
-generate = function () {
-    const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const lowercase = 'abcdefghijklmnopqrstuvwxyz';
-    const numbers = '0123456789';
-    const symbols = '!"#$%&\'()*+,-./:;<=>?@^[\\]^_`{|}~';
-    const all = uppercase + lowercase + numbers + symbols;
+const generatePassword = function () {
+    const length = 12
+    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*().[]{}~-+=_:;,<>?"
     let password = "";
-    for (var index = 0; index < 12; index++) {
-        const character = Math.floor(Math.random() * all.length);
-        password += all.substring(character, character + 1);
+    for (let i = 0, n = charset.length; i < length; ++i) {
+        password += charset.charAt(Math.floor(Math.random() * n));
     }
-    document.getElementById("pass_text").innerHTML=password;
+    document.getElementById("pass_text").textContent = password;
+    console.log(password," length of ", password.length)
 }
 
-submit = function () {
+const submit = function () {
     // validate email
     const email=document.getElementById("email");
     const password=document.getElementById("spwd");

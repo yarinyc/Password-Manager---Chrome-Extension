@@ -13,15 +13,12 @@ login = function () {
     const email = document.getElementById("email").value
     const password = document.getElementById("pwd").value
     const userInfo = {name: email, password: password};
-    api.login(userInfo).then((res)=>{
+    api.login(userInfo)
+    .then((res)=>{
         console.log()
         if(res.msg == 'Success'){
             let passwords = res.passwords;
-            chrome.storage.local.set({'passwords': passwords}, function() {
-                console.log("passwords saved:\n",passwords)
-            });
-            chrome.storage.local.set({'login': true});
-            chrome.storage.local.set({'userInfo': userInfo});
+            chrome.storage.local.set({'login': true, 'passwords': passwords, 'userInfo': userInfo});
             window.open("../connected.html","_self");
             return;
         }

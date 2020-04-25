@@ -34,3 +34,8 @@ button {
 	text-decoration: none;
 	display: inline-block;
   }
+
+#pass_text {
+font-weight: bold;
+font-style: italic;
+}
