@@ -101,12 +101,20 @@ chrome.storage.local.get(['login'], function(result){
         });
       }
       // *** cs ***
-      if (window.location.href.indexOf("cs.bgu.ac.il") > -1) {
-        /TODO need to complete/
-        
-      }
-    }  
+      if (window.location.href.indexOf("yad2.co.il/login") > -1) {
+        chrome.storage.local.get(['passwords'], function(result){
+          domainName = "yad2.co.il";
+          domainData = result.passwords.find((e)=>e.domain === domainName);
+          // insert credentials into the input fields
+          autoFill("userName", "password");    
+          //listen for submit  event  
+          let forms = document.getElementById("loginForm")
+          if(forms){
+            forms.addEventListener('submit', function(){
+                onSubmit("userName", "password");
+            }); 
+          }  
+      });
+    }
+  }
 });
-
-
-

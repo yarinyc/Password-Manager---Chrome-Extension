@@ -3,6 +3,8 @@ window.onload=function(){
        document.getElementById("logoutButton").addEventListener("click", logout);
     if (document.getElementById("generate"))
        document.getElementById("generate").addEventListener("click", generatePassword);
+    if (document.getElementById("copyButtonGen"))
+       document.getElementById("copyButtonGen").addEventListener("click", copyToClipboard);
 }
 
 const logout = function() {
@@ -18,5 +20,12 @@ const generatePassword = function () {
         password += charset.charAt(Math.floor(Math.random() * n));
     }
     document.getElementById("pass_text").textContent = password;
-    console.log(password," length of ", password.length)
+}
+
+copyToClipboard=function() {  
+    console.log("im in")
+    var copyText = document.getElementById("pass_text");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+    document.execCommand("copy");
 }

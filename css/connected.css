@@ -21,7 +21,7 @@ img {
 div.message{
 	text-align: center;
 }
-button {
+#logoutButton {
 	/* width: 20%; */
 	background-color: LightCoral;
 	color: white;
