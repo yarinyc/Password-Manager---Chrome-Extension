@@ -2,6 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
+const fs = require('fs');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -19,8 +20,27 @@ app.use((_, res, next) => {
 });
 
 //data structures for users and userdata
-let users = []; // { name: "XYZ@gmail.com" , password: *******}
-let data = [];  // { name: "XYZ@gmail.com" , passwords: [{domain: ***, userName: ***, password: ***}, {domain: ***, userName: ***, password: ***}, ...]}
+let users = require('./users.json'); // format: { name: "XYZ@gmail.com" , password: *******}
+let data = require('./data.json');  //  format: { name: "XYZ@gmail.com" , passwords: [{domain: ***, userName: ***, password: ***}, {domain: ***, userName: ***, password: ***}, ...]}
+
+const backup = function(){
+	try{
+		console.log("Started server data backup...");
+		fs.writeFileSync('./users.json', JSON.stringify(users, null, 2));
+		fs.writeFileSync('./data.json', JSON.stringify(data, null, 2));
+		console.log("Completed server data backup succesfully");
+	} catch (err){
+		console.log("An error happened:");
+		console.error(err);
+	}
+}
+
+process.on( 'SIGINT', function() {
+	console.log( "\nGracefully shutting down from SIGINT (Ctrl-C)" );
+	// backup all data to the .json files:
+	backup();
+	process.exit( );
+  })
 
 async function validateUser(Username, password) {
 	const user = users.find(user => user.name === Username);
@@ -42,12 +62,12 @@ app.get('/api/users', (req, res) => {
 
 //Register:
 app.post('/api/users', async (req, res) => { 
-	const currentUser = users.find(user => user.name === req.body.name)
-	if(currentUser !== undefined){
-		res.status(209).send({msg: 'User Name Taken'})
-		return;
-	}
 	try {
+		const currentUser = users.find(user => user.name === req.body.name)
+		if(currentUser !== undefined){
+			res.status(209).send({msg: 'User Name Taken'})
+			return;
+		}
 		const hashedPassword = await bcrypt.hash(req.body.password, 10) // hash the user's password + salt
 		const user = { name: req.body.name, password: hashedPassword}
 		users.push(user) // add user to users list
@@ -61,11 +81,11 @@ app.post('/api/users', async (req, res) => {
 
 //login: (only for first validation, sends current password file)
 app.post('/api/users/login', async (req, res) => {
-	const user = users.find(user => user.name === req.body.name)
-	if (user == undefined) {
-	  	return res.status(209).send({msg: 'Cannot find user'})
-	}
 	try {
+		const user = users.find(user => user.name === req.body.name)
+		if (user == undefined) {
+			  return res.status(209).send({msg: 'Cannot find user'})
+		}
 		if(await bcrypt.compare(req.body.password, user.password)) {
 			const userData = data.find((d)=>d.name === req.body.name)
 			console.log(user.name, " logged in successfully")
@@ -98,7 +118,7 @@ app.delete('/api/users', async (req, res) => {
 
 //specific user requests: add/edit credentials 
 
-//update user's password file:
+//update (replace) user's password file:
 //--> req.body = {name, password, passwords}
 //--> req.body.passwords = [ {domain, userName, userPassword }, ... ]
 app.put('/api/data/', async (req, res) => {
@@ -116,7 +136,6 @@ app.put('/api/data/', async (req, res) => {
 	} catch {
 		res.status(500).send({msg: 'Server Error'})
 	}
-	
 });
 
 //update/add to user's password file for a specific domain:
