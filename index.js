@@ -3,9 +3,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const fs = require('fs');
+const ngrok = require('ngrok');
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+let url = undefined;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -35,12 +38,14 @@ const backup = function(){
 	}
 }
 
-process.on( 'SIGINT', function() {
+process.on( 'SIGINT', async function() {
 	console.log( "\nGracefully shutting down from SIGINT (Ctrl-C)" );
 	// backup all data to the .json files:
 	backup();
-	process.exit( );
-  })
+	//ngrok.disconnect().then(()=>console.log("okkkkkkkkkkkkkkkkkkkkkkkkkkkkkk")).catch((err)=>console.log("err"));
+	//await ngrok.kill(); // kills ngrok process
+	process.exit();
+});
 
 async function validateUser(Username, password) {
 	const user = users.find(user => user.name === Username);
@@ -54,6 +59,10 @@ async function validateUser(Username, password) {
 }
 
 //**** debug *** (ToRemove):
+app.get('/', (req, res) => {
+	res.send("hello")
+});
+
 app.get('/api/users', (req, res) => {
 	res.json({users: users, data: data})
 })
@@ -160,4 +169,12 @@ app.put('/api/data/:domain', async (req, res) => {
 	}
 });
 
-app.listen(port, () => console.log(`Listening on port ${port}...`));
+app.listen(port, async() =>{
+	url = await ngrok.connect({
+		proto: 'http', // http|tcp|tls, defaults to http
+		addr: port, // port or network address, defaults to 80
+		region: 'eu', // one of ngrok regions (us, eu, au, ap), defaults to us
+	});
+	console.log("url:",url);
+	console.log(`Listening on port ${port}...`)
+});
