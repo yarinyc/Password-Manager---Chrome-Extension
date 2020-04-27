@@ -8,7 +8,8 @@ window.onload=function(){
 }
 
 const logout = function() {
-    chrome.storage.local.set({'login': false})
+    chrome.storage.local.set({'login': false, 'passwords': []});
+    chrome.storage.local.remove('userInfo');
     my_window = window.open("../login.html","_self");
 }
 
@@ -23,9 +24,9 @@ const generatePassword = function () {
 }
 
 copyToClipboard=function() {  
-    console.log("im in")
-    var copyText = document.getElementById("pass_text");
-    copyText.select();
-    copyText.setSelectionRange(0, 99999);
-    document.execCommand("copy");
+    // console.log("im in")
+    // var copyText = document.getElementById("pass_text");
+    // copyText.select();
+    // copyText.setSelectionRange(0, 99999);
+    // document.execCommand("copy");
 }

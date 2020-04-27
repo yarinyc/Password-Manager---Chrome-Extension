@@ -1,5 +1,6 @@
 
 const port=3000;
+// creates an interface for client side to connect with server
 const createApiClient = () => {
 	return {
 		register: (registerRequest) => {
@@ -7,12 +8,10 @@ const createApiClient = () => {
         },
 		
 		login: (logInRequest) => {
-			console.log(logInRequest);
 			return axios.post(`http://localhost:${port}/api/users/login`, logInRequest).then((res) => res.data);
 		},
 
 		deleteUser: (deleteRequest) => {
-			console.log(deleteRequest);
 			return axios.delete(`http://localhost:${port}/api/users`, {data: deleteRequest}).then((res) => res.data);
 		},
 

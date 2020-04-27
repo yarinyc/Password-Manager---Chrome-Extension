@@ -33,9 +33,9 @@ async function validateUser(Username, password) {
 	else return false;
 }
 
-//**** debug:
+//**** debug *** (ToRemove):
 app.get('/api/users', (req, res) => {
-	res.json({user: users, data: data})
+	res.json({users: users, data: data})
 })
 
 // --> general user requests: register/login
@@ -68,7 +68,7 @@ app.post('/api/users/login', async (req, res) => {
 	try {
 		if(await bcrypt.compare(req.body.password, user.password)) {
 			const userData = data.find((d)=>d.name === req.body.name)
-			console.log(" logged in successfully:\n",user.name)
+			console.log(user.name, " logged in successfully")
 			res.send({msg: 'Success', passwords: userData.passwords})
 		}
 		else {
@@ -89,7 +89,7 @@ app.delete('/api/users', async (req, res) => {
 		}
 		users = users.filter((u)=> u.name !== req.body.name)
 		data = data.filter((d)=> d.name !== req.body.name)
-		console.log(" deleted his user:\n",req.body.name)
+		console.log(req.body.name," deleted his user")
 		res.status(200).send({msg: 'Deleted'})
 	} catch {
 		res.status(500).send({msg: 'Server Error'})
@@ -100,7 +100,7 @@ app.delete('/api/users', async (req, res) => {
 
 //update user's password file:
 //--> req.body = {name, password, passwords}
-//--> req.body.passwords = [ {domain, userName, password }, ... ]
+//--> req.body.passwords = [ {domain, userName, userPassword }, ... ]
 app.put('/api/data/', async (req, res) => {
 	try{
 		const valid = await validateUser(req.body.name, req.body.password)

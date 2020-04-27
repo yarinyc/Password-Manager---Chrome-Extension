@@ -58,10 +58,10 @@ const submit = function () {
     email.style=styleEmail;
     password.style=stylePassword;
     repassword.style=styleRepassword; 
-    /TODO: need to hash the function/
-    const myObj = {name: email.value, password: password.value};
-    api.register(myObj).then((res)=>{
-        console.log(res);
+    //derive server password from master password:
+    const serverKey = CryptoJS.SHA256(password.value+1).toString();
+    const registerRequest = {name: email.value, password: serverKey};
+    api.register(registerRequest).then((res)=>{
         if(res.msg == 'Success'){
             my_window = window.open("../login.html","_self");
             return;
