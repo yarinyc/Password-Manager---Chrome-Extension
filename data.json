@@ -13,5 +13,15 @@
         "userPassword": "U2FsdGVkX1+H72mlbQadp8z1sh6mBm7b50arjhA08Z0=8199cf150ef830f1e6e621403083a4cc41bfee8018754b1049a527da95a0ddf7"
       }
     ]
+  },
+  {
+    "name": "nooamce@gmail.com",
+    "passwords": [
+      {
+        "domain": "linkedin.com",
+        "userName": "U2FsdGVkX1+wlH8nEKCMcgIeCa81XygOC8kMPLHs7c/AEoCuJZj0yhH1ozzYscJ3b0bdeb25b55d9f315e9dfc785c450009131ed1a5a6ef1ca523f8a1f8c21a3035",
+        "userPassword": "U2FsdGVkX1+DV14vHU/xWYcldKfVa/o9xKxobnAgaoI=312f5e9fca1aa7d0ee313f04ce5674ac27669cea3b71c7770884244b9c86e57d"
+      }
+    ]
   }
 ]

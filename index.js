@@ -8,7 +8,7 @@ const ngrok = require('ngrok');
 const app = express();
 const port = process.env.PORT || 3000;
 
-let url = undefined;
+let baseUrl = undefined;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -66,6 +66,7 @@ app.get('/', (req, res) => {
 app.get('/api/users', (req, res) => {
 	res.json({users: users, data: data})
 })
+// ****
 
 // --> general user requests: register/login
 
@@ -170,11 +171,11 @@ app.put('/api/data/:domain', async (req, res) => {
 });
 
 app.listen(port, async() =>{
-	url = await ngrok.connect({
+	baseUrl = await ngrok.connect({
 		proto: 'http', // http|tcp|tls, defaults to http
 		addr: port, // port or network address, defaults to 80
 		region: 'eu', // one of ngrok regions (us, eu, au, ap), defaults to us
 	});
-	console.log("url:",url);
+	console.log("baseUrl for remote access:",baseUrl);
 	console.log(`Listening on port ${port}...`)
 });
