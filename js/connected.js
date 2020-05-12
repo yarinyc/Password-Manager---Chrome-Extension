@@ -24,9 +24,12 @@ const generatePassword = function () {
 }
 
 copyToClipboard=function() {  
-    // console.log("im in")
-    // var copyText = document.getElementById("pass_text");
-    // copyText.select();
-    // copyText.setSelectionRange(0, 99999);
-    // document.execCommand("copy");
+    navigator.clipboard.writeText(document.getElementById("pass_text").textContent)
+    .then(() => {
+      console.log('Text copied to clipboard');
+    })
+    .catch(err => {
+      // This can happen if the user denies clipboard permissions:
+      console.error('Could not copy text: ', err);
+    });
 }

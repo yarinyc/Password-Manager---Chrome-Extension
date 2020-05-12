@@ -3,10 +3,12 @@
   "description" : "A secured plug-in to remember passwords",
   "version": "1.0.0",
   "permissions": [
-      "activeTab",
-      "storage",
-      "tabs"
-      ],
+    "activeTab",
+    "storage",
+    "tabs",
+    "clipboardRead",
+    "clipboardWrite"
+    ],
   "browser_action": {
     "default_popup": "plugin.html",
     "default_icon": "password.png"

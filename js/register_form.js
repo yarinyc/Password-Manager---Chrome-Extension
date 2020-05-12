@@ -6,6 +6,8 @@ window.onload=function(){
     if (document.getElementById("sbmt")){
         document.getElementById("sbmt").addEventListener("click", submit);
     }
+    if (document.getElementById("copyButtonGen"))
+       document.getElementById("copyButtonGen").addEventListener("click", copyToClipboard);
 }
 
 const generatePassword = function () {
@@ -17,6 +19,17 @@ const generatePassword = function () {
     }
     document.getElementById("pass_text").textContent = password;
     console.log(password," length of ", password.length)
+}
+
+copyToClipboard=function() {  
+    navigator.clipboard.writeText(document.getElementById("pass_text").textContent)
+    .then(() => {
+      console.log('Text copied to clipboard');
+    })
+    .catch(err => {
+      // This can happen if the user denies clipboard permissions:
+      console.error('Could not copy text: ', err);
+    });
 }
 
 const submit = function () {
