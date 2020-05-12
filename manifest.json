@@ -23,6 +23,9 @@
       "js": ["node_modules/axios/dist/axios.min.js", "js/api.js", "node_modules/crypto-js/crypto-js.js", "content.js"]
     }
   ],
+  "web_accessible_resources": [
+    "BaseUrl.json"
+  ],
   "icons": {
     "16": "password.png",
     "48": "password.png"

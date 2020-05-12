@@ -42,8 +42,6 @@ process.on( 'SIGINT', async function() {
 	console.log( "\nGracefully shutting down from SIGINT (Ctrl-C)" );
 	// backup all data to the .json files:
 	backup();
-	//ngrok.disconnect().then(()=>console.log("okkkkkkkkkkkkkkkkkkkkkkkkkkkkkk")).catch((err)=>console.log("err"));
-	//await ngrok.kill(); // kills ngrok process
 	process.exit();
 });
 
@@ -58,15 +56,15 @@ async function validateUser(Username, password) {
 	else return false;
 }
 
-//**** debug *** (ToRemove):
+//**** debug *** (ToRemove): *********************
 app.get('/', (req, res) => {
-	res.send("hello")
+	res.send("This Is Our Secure Server!")
 });
 
 app.get('/api/users', (req, res) => {
 	res.json({users: users, data: data})
 })
-// ****
+// ***********************************************
 
 // --> general user requests: register/login
 
@@ -177,5 +175,6 @@ app.listen(port, async() =>{
 		region: 'eu', // one of ngrok regions (us, eu, au, ap), defaults to us
 	});
 	console.log("baseUrl for remote access:",baseUrl);
-	console.log(`Listening on port ${port}...`)
+	fs.writeFileSync('./BaseURL.json', JSON.stringify({baseUrl: baseUrl}, null, 2)); // write the new base url to file
+	console.log(`Listening on port ${port}... (Click Ctrl-C for server shutdown)`)
 });

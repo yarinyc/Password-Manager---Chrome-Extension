@@ -1,6 +1,11 @@
 
 const port=3000;
-const baseUrl = 'https://2323f6be.eu.ngrok.io';
+const url = chrome.runtime.getURL('./baseUrl.json');
+let baseUrl = '';
+fetch(url)
+    .then((response) => response.json())
+	.then((json) => baseUrl = json.baseUrl); //nakes sure we update the base url of the server (free version of ngrok gives randon url each time)
+
 // creates an interface for client side to connect with server
 const createApiClient = () => {
 	return {
