@@ -21,6 +21,17 @@ const encryptData = function(userInfo, userName, userPassword){
   return [EuserName, Epassword];
 }
 
+const encryptAllData = function(userInfo, passwordFile){
+  const E = userInfo.EKey;
+  const M = userInfo.MKey;
+  //encrpyt + mac:
+  let EpasswordFile = CryptoJS.AES.encrypt(JSON.stringify(passwordFile), E).toString();
+  const HMAC = CryptoJS.HmacSHA256(EpasswordFile, M).toString();
+  EpasswordFile = EpasswordFile + HMAC;
+
+  return EpasswordFile;
+}
+
 // on submit of login form of web page:
 const onSubmit = function (userNameId, passwordId, isId) { // isId = true => use idTag else nameTag
   let userNameElement = document.getElementById(userNameId);
@@ -37,9 +48,10 @@ const onSubmit = function (userNameId, passwordId, isId) { // isId = true => use
         passwords.push({domain: domainName, userName: userNameElement.value, userPassword: passwordElement.value});
         chrome.storage.local.set({'passwords': passwords}); // update data in local storage
         // Encrypt password entry before the upload:
-        let [EuserName, Epassword] = encryptData(result.userInfo, userNameElement.value, passwordElement.value);
-        let data = {name: result.userInfo.name , password: result.userInfo.password , domain: domainName, userName: EuserName, userPassword: Epassword};
-        api.uploadUserData(domainName, data) // update data in server
+        //let [EuserName, Epassword] = encryptData(result.userInfo, userNameElement.value, passwordElement.value);
+        let Epasswords = encryptAllData(result.userInfo, passwords);
+        let data = {name: result.userInfo.name , password: result.userInfo.password , passwords: Epasswords};
+        api.uploadAllUserData(data) // update data in server
         .then((res)=> console.log(res))
         .catch((err)=>console.log(err));
       });
@@ -52,10 +64,11 @@ const onSubmit = function (userNameId, passwordId, isId) { // isId = true => use
         let passwords = result.passwords;
         passwords = passwords.map((e)=> e.domain == domainName ? {domain: domainName, userName: userNameElement.value, userPassword: passwordElement.value} : e);
         chrome.storage.local.set({'passwords': passwords}); // update data in local storage
+        let Epasswords = encryptAllData(result.userInfo, passwords);
         // Encrypt password entry before the upload:
-        let [EuserName, Epassword] = encryptData(result.userInfo, userNameElement.value, passwordElement.value);
-        let data = {name: result.userInfo.name , password: result.userInfo.password , domain: domainName, userName: EuserName, userPassword: Epassword};
-        api.uploadUserData(domainName, data) // update data in server
+        //let [EuserName, Epassword] = encryptData(result.userInfo, userNameElement.value, passwordElement.value);
+        let data = {name: result.userInfo.name , password: result.userInfo.password , passwords: Epasswords};
+        api.uploadAllUserData(data) // update data in server
         .then((res)=> console.log(res))
         .catch((err)=>console.log(err));
       });

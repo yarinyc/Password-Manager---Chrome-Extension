@@ -40,8 +40,18 @@ const decryptEntry = function(passwordEntry, E, M){
     return {domain: passwordEntry.domain , userName: userName , userPassword: userPassword};
 }
 //decrypts all user passwords
-const decryptFile = function(passwords, E, M){
-    return passwords.map((e)=> decryptEntry(e, E, M));
+const decryptFile = function(passwordsFile, E, M){
+    const [data, mac] = splitMac(passwordsFile);
+    let passwords = "";
+    // Always calculates the HMAC on the encrypted object before decryption
+    // This prevents any manipulation of the encrypted data to cause harm after decryption.
+    if(CryptoJS.HmacSHA256(data, M).toString() == mac){
+        const bytes  = CryptoJS.AES.decrypt(data, E);
+        passwords = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    } else {
+        alert("It seems that someone altered or manipulated your passwords");
+    }
+    return passwords;
 }
 
 const login = function () {
@@ -53,7 +63,7 @@ const login = function () {
     api.login({name: userName, password: password})
     .then((res)=>{
         if(res.msg == 'Success'){
-            let passwords = decryptFile(res.passwords, EKey, MKey);
+            let passwords = res.passwords != "" ? decryptFile(res.passwords, EKey, MKey) : [];
             chrome.storage.local.set({'login': true, 'passwords': passwords, 'userInfo': userInfo});
             window.open("../connected.html","_self");
             return;

@@ -79,7 +79,7 @@ app.post('/api/users', async (req, res) => {
 		const hashedPassword = await bcrypt.hash(req.body.password, 10) // hash the user's password + salt
 		const user = { name: req.body.name, password: hashedPassword}
 		users.push(user) // add user to users list
-		data.push({name: user.name, passwords: []}) // add new empty entry for user to the data
+		data.push({name: user.name, passwords: ""}) // add new empty entry for user to the data
 		console.log("regiter request:\n",user)
 		res.status(201).send({msg: 'Success'}) //OK - Created
 	} catch {
@@ -130,6 +130,7 @@ app.delete('/api/users', async (req, res) => {
 //--> req.body = {name, password, passwords}
 //--> req.body.passwords = [ {domain, userName, userPassword }, ... ]
 app.put('/api/data/', async (req, res) => {
+	console.log('hjkgjk');
 	try{
 		const valid = await validateUser(req.body.name, req.body.password)
 		if(!valid){
@@ -148,25 +149,25 @@ app.put('/api/data/', async (req, res) => {
 
 //update/add to user's password file for a specific domain:
 //--> req.body = {name, password, userName, userPassword}
-app.put('/api/data/:domain', async (req, res) => {
-	try{
-		const valid = await validateUser(req.body.name, req.body.password)
-		if(!valid){
-			res.send({msg: 'Not Allowed'})
-			return;
-		}
-		let userData = data.find((d)=>d.name === req.body.name)
-		let index = userData.passwords.findIndex((e)=>e.domain === req.params.domain)
-		if(index === -1){
-			userData.passwords.push({domain: req.params.domain, userName: req.body.userName, userPassword: req.body.userPassword})
-		}
-		else userData.passwords[index] = {domain: req.params.domain, userName: req.body.userName, userPassword: req.body.userPassword}
-		console.log('data recieved:\n', {domain: req.params.domain, userName: req.body.userName, userPassword: req.body.userPassword})
-		res.status(200).send({msg: "Success"})
-	} catch {
-		res.status(500).send({msg: 'Server Error'})
-	}
-});
+// app.put('/api/data/:domain', async (req, res) => {
+// 	try{
+// 		const valid = await validateUser(req.body.name, req.body.password)
+// 		if(!valid){
+// 			res.send({msg: 'Not Allowed'})
+// 			return;
+// 		}
+// 		let userData = data.find((d)=>d.name === req.body.name)
+// 		let index = userData.passwords.findIndex((e)=>e.domain === req.params.domain)
+// 		if(index === -1){
+// 			userData.passwords.push({domain: req.params.domain, userName: req.body.userName, userPassword: req.body.userPassword})
+// 		}
+// 		else userData.passwords[index] = {domain: req.params.domain, userName: req.body.userName, userPassword: req.body.userPassword}
+// 		console.log('data recieved:\n', {domain: req.params.domain, userName: req.body.userName, userPassword: req.body.userPassword})
+// 		res.status(200).send({msg: "Success"})
+// 	} catch {
+// 		res.status(500).send({msg: 'Server Error'})
+// 	}
+// });
 
 app.listen(port, async() =>{
 	baseUrl = await ngrok.connect({

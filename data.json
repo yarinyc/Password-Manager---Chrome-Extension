@@ -1,27 +1,6 @@
 [
   {
     "name": "yarinyc@gmail.com",
-    "passwords": [
-      {
-        "domain": "linkedin.com",
-        "userName": "U2FsdGVkX1+lGyJoHw9xLo1zobsYlEa7rn8lL4lnVKeuIUpA7DHXomt9MZyw3JiN989946c5c93d004d66753ce07850f514d83701033f72f421e12255ef253c560c",
-        "userPassword": "U2FsdGVkX19pJ+fQTEeQcqZC2UUGyxZOjx8Yug8MGJo=10e35f447801063a102749165031f277ba0110f23168d306ebfef64822c70995"
-      },
-      {
-        "domain": "facebook.com",
-        "userName": "U2FsdGVkX1+2q32Z/3pw+nlABBHYaL1UAGO3Mc5CuUY8InBYQ3las/X8Ek0Qzg4Q96f703e0bb29e312fc580f1a4f5a20da25a2092f826c96bdb2c01eeb2f0e6d44",
-        "userPassword": "U2FsdGVkX1+H72mlbQadp8z1sh6mBm7b50arjhA08Z0=8199cf150ef830f1e6e621403083a4cc41bfee8018754b1049a527da95a0ddf7"
-      }
-    ]
-  },
-  {
-    "name": "nooamce@gmail.com",
-    "passwords": [
-      {
-        "domain": "linkedin.com",
-        "userName": "U2FsdGVkX1+wlH8nEKCMcgIeCa81XygOC8kMPLHs7c/AEoCuJZj0yhH1ozzYscJ3b0bdeb25b55d9f315e9dfc785c450009131ed1a5a6ef1ca523f8a1f8c21a3035",
-        "userPassword": "U2FsdGVkX1+DV14vHU/xWYcldKfVa/o9xKxobnAgaoI=312f5e9fca1aa7d0ee313f04ce5674ac27669cea3b71c7770884244b9c86e57d"
-      }
-    ]
+    "passwords": "U2FsdGVkX19bhlnWtSdIXcPJqRQPDmRQxsjyIiZGxsmsLCKcs3C9+ugTIP5S+gbHn/r635OAaNSRc1Bgeq/eFI7NvmkJiVPQt/6/hqwZz151K4BCL6SRluSUtG6+M3JNdFba1NRolcpCl69GHvIbWV8ZpU3D0DOyXYqlAON9gszgq5+0DBKf98SEAmIEgeKJs0t9Dd7OWWXDL2JyB8HZupznBih+WICpXl1plpuiAOKIHcVh4RLghPnn7J2Np/M07f0add3934be34afff1ff797fbe83be05e1936acbb923462733173e2e893e595"
   }
 ]
