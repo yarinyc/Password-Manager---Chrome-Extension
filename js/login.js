@@ -21,7 +21,7 @@ const deriveKeys = function(masterPassword){
     let MKey = CryptoJS.SHA256(masterPassword+3).toString();
     return [serverKey,EKey,MKey];
 }
-// decrypts 1 password entry with EKey and authenticates with MKey
+// decrypts 1 password entry with EKey and authenticates with MKey - Not in use
 const decryptEntry = function(passwordEntry, E, M){
     const [data, mac] = splitMac(passwordEntry.userName);
     const [data2, mac2] = splitMac(passwordEntry.userPassword);

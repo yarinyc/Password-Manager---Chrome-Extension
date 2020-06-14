@@ -61,9 +61,9 @@ app.get('/', (req, res) => {
 	res.send("This Is Our Secure Server!")
 });
 
-app.get('/api/users', (req, res) => {
-	res.json({users: users, data: data})
-})
+// app.get('/api/users', (req, res) => {
+// 	res.json({users: users, data: data})
+// })
 // ***********************************************
 
 // --> general user requests: register/login
@@ -80,7 +80,9 @@ app.post('/api/users', async (req, res) => {
 		const user = { name: req.body.name, password: hashedPassword}
 		users.push(user) // add user to users list
 		data.push({name: user.name, passwords: ""}) // add new empty entry for user to the data
-		console.log("regiter request:\n",user)
+		//console.log("regiter request:\n",user);
+		// backup all data to the .json files:
+		backup();
 		res.status(201).send({msg: 'Success'}) //OK - Created
 	} catch {
 	  	res.status(500).send({msg: 'Server Error'}) // Internal Server Error
@@ -118,6 +120,8 @@ app.delete('/api/users', async (req, res) => {
 		users = users.filter((u)=> u.name !== req.body.name)
 		data = data.filter((d)=> d.name !== req.body.name)
 		console.log(req.body.name," deleted his user")
+		// backup all data to the .json files:
+		backup();
 		res.status(200).send({msg: 'Deleted'})
 	} catch {
 		res.status(500).send({msg: 'Server Error'})
@@ -130,7 +134,6 @@ app.delete('/api/users', async (req, res) => {
 //--> req.body = {name, password, passwords}
 //--> req.body.passwords = [ {domain, userName, userPassword }, ... ]
 app.put('/api/data/', async (req, res) => {
-	console.log('hjkgjk');
 	try{
 		const valid = await validateUser(req.body.name, req.body.password)
 		if(!valid){
@@ -140,7 +143,9 @@ app.put('/api/data/', async (req, res) => {
 		const newData = req.body.passwords
 		let userData = data.find((d)=>d.name === req.body.name)
 		userData.passwords = newData // update current password file with the user's file
-		console.log('data recieved:\n', newData)
+		// backup all data to the .json files:
+		backup();
+		//console.log('data recieved:\n', newData)
 		res.status(200).send({msg: 'Success'}) // OK
 	} catch {
 		res.status(500).send({msg: 'Server Error'})
