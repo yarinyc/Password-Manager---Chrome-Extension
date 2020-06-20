@@ -53,7 +53,10 @@ async function validateUser(Username, password) {
 	else if(await bcrypt.compare(password, user.password)){
 		return true;
 	}
-	else return false;
+	else{
+		console.log('username: ',Username,' password: ',password,'\nuser: ',user);
+		return false;
+	}
 }
 
 //**** debug *** (ToRemove): *********************
@@ -92,6 +95,10 @@ app.post('/api/users', async (req, res) => {
 //login: (only for first validation, sends current password file)
 app.post('/api/users/login', async (req, res) => {
 	try {
+		delete require.cache[require.resolve('./users.json')];  
+		delete require.cache[require.resolve('./data.json')];  
+		users = require('./users.json'); // reload data from file
+		data = require('./data.json');
 		const user = users.find(user => user.name === req.body.name)
 		if (user == undefined) {
 			  return res.status(209).send({msg: 'Cannot find user'})
@@ -115,6 +122,7 @@ app.delete('/api/users', async (req, res) => {
 		const valid = await validateUser(req.body.name, req.body.password)
 		if(!valid){
 			res.send({msg: 'Not Allowed'})
+			console.log('Not Allowed');
 			return;
 		}
 		users = users.filter((u)=> u.name !== req.body.name)
@@ -124,6 +132,7 @@ app.delete('/api/users', async (req, res) => {
 		backup();
 		res.status(200).send({msg: 'Deleted'})
 	} catch {
+		console.log('err');
 		res.status(500).send({msg: 'Server Error'})
   	}
 });

@@ -77,11 +77,14 @@ const login = function () {
 const deleteAccount = function () {
     const err=document.getElementById("err");
     const email = document.getElementById("email").value
-    const password = document.getElementById("pwd").value
+    const masterPassword = document.getElementById("pwd").value
+    const [password,EKey,MKey] = deriveKeys(masterPassword);
     const userInfo = {name: email, password: password};
     api.deleteUser(userInfo).then((res)=>{
         if(res.msg == 'Deleted'){
             err.innerHTML="Account deleted successfully";
+            document.getElementById("email").value = "";
+            document.getElementById("pwd").value = "";
             return;
         }
         err.innerHTML="Couldn't delete account";
