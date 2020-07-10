@@ -50,7 +50,7 @@ const onSubmit = function (userNameId, passwordId, isId) { // isId = true => use
         // Encrypt password entry before the upload:
         //let [EuserName, Epassword] = encryptData(result.userInfo, userNameElement.value, passwordElement.value);
         let Epasswords = encryptAllData(result.userInfo, passwords);
-        let data = {name: result.userInfo.name , password: result.userInfo.password , passwords: Epasswords};
+        let data = {name: result.userInfo.name , password: result.userInfo.password , data: Epasswords};
         api.uploadAllUserData(data) // update data in server
         .then((res)=> console.log(res))
         .catch((err)=>console.log(err));
@@ -67,7 +67,7 @@ const onSubmit = function (userNameId, passwordId, isId) { // isId = true => use
         let Epasswords = encryptAllData(result.userInfo, passwords);
         // Encrypt password entry before the upload:
         //let [EuserName, Epassword] = encryptData(result.userInfo, userNameElement.value, passwordElement.value);
-        let data = {name: result.userInfo.name , password: result.userInfo.password , passwords: Epasswords};
+        let data = {name: result.userInfo.name , password: result.userInfo.password , data: Epasswords};
         api.uploadAllUserData(data) // update data in server
         .then((res)=> console.log(res))
         .catch((err)=>console.log(err));

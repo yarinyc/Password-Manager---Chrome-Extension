@@ -63,7 +63,7 @@ const login = function () {
     api.login({name: userName, password: password})
     .then((res)=>{
         if(res.msg == 'Success'){
-            let passwords = res.passwords != "" ? decryptFile(res.passwords, EKey, MKey) : [];
+            let passwords = res.data != "" ? decryptFile(res.data, EKey, MKey) : [];
             chrome.storage.local.set({'login': true, 'passwords': passwords, 'userInfo': userInfo});
             window.open("../connected.html","_self");
             return;

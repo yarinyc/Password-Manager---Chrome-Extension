@@ -54,12 +54,11 @@ async function validateUser(Username, password) {
 		return true;
 	}
 	else{
-		console.log('username: ',Username,' password: ',password,'\nuser: ',user);
 		return false;
 	}
 }
 
-//**** debug *** (ToRemove): *********************
+//**** debug ************************
 app.get('/', (req, res) => {
 	res.send("This Is Our Secure Server!")
 });
@@ -82,8 +81,7 @@ app.post('/api/users', async (req, res) => {
 		const hashedPassword = await bcrypt.hash(req.body.password, 10) // hash the user's password + salt
 		const user = { name: req.body.name, password: hashedPassword}
 		users.push(user) // add user to users list
-		data.push({name: user.name, passwords: ""}) // add new empty entry for user to the data
-		//console.log("regiter request:\n",user);
+		data.push({name: user.name, data: ""}) // add new empty entry for user to the data
 		// backup all data to the .json files:
 		backup();
 		res.status(201).send({msg: 'Success'}) //OK - Created
@@ -95,6 +93,7 @@ app.post('/api/users', async (req, res) => {
 //login: (only for first validation, sends current password file)
 app.post('/api/users/login', async (req, res) => {
 	try {
+		//clear require.js cache so we can re-read the data from the files
 		delete require.cache[require.resolve('./users.json')];  
 		delete require.cache[require.resolve('./data.json')];  
 		users = require('./users.json'); // reload data from file
@@ -106,7 +105,7 @@ app.post('/api/users/login', async (req, res) => {
 		if(await bcrypt.compare(req.body.password, user.password)) {
 			const userData = data.find((d)=>d.name === req.body.name)
 			console.log(user.name, " logged in successfully")
-			res.send({msg: 'Success', passwords: userData.passwords})
+			res.send({msg: 'Success', data: userData.data})
 		}
 		else {
 			res.send({msg: 'Not Allowed'})
@@ -122,7 +121,6 @@ app.delete('/api/users', async (req, res) => {
 		const valid = await validateUser(req.body.name, req.body.password)
 		if(!valid){
 			res.send({msg: 'Not Allowed'})
-			console.log('Not Allowed');
 			return;
 		}
 		users = users.filter((u)=> u.name !== req.body.name)
@@ -132,7 +130,6 @@ app.delete('/api/users', async (req, res) => {
 		backup();
 		res.status(200).send({msg: 'Deleted'})
 	} catch {
-		console.log('err');
 		res.status(500).send({msg: 'Server Error'})
   	}
 });
@@ -149,12 +146,11 @@ app.put('/api/data/', async (req, res) => {
 			res.send({msg: 'Not Allowed'})
 			return;
 		}
-		const newData = req.body.passwords
+		const newData = req.body.data
 		let userData = data.find((d)=>d.name === req.body.name)
-		userData.passwords = newData // update current password file with the user's file
+		userData.data = newData // update current password file with the user's file
 		// backup all data to the .json files:
 		backup();
-		//console.log('data recieved:\n', newData)
 		res.status(200).send({msg: 'Success'}) // OK
 	} catch {
 		res.status(500).send({msg: 'Server Error'})
