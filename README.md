@@ -7,7 +7,7 @@ For each user the server holds a single entry of data. Each entry holds the user
 The communication with the client is done with http protocol (get, post, delete…).
 - Using ngrok framework we expose our server to the internet, all user's can connect the server from the internet, even if not in the same network.
 
-## Client side: (Google Chrome Eextension)
+## Client side: (Google Chrome Extension)
 
 The user must download the plug-in. On registration the user picks a username and one master password. Every time the user tries to connect, they must enter the master password. Once connected, the password file is sent to user and decrypted in memory after authentication. For every password field in site, if already stored, display it, if not stored, ask user whether to store it after login and if the entered password does not match the one stored, ask user whether to update.
 
@@ -21,12 +21,15 @@ If any of a user's data (any part of his domains, usernames or passwords) is alt
 - Currently the extension supports the following websites: Facebook, LinkedIn, Yad2.
 
 ## How To Install:
-- Prequisites: npm, chrome web browser.
-- Clone the repository to your machine.
-- Run 'npm install' to install all the necessary dependencies.
-- Run 'node index.js' in order to start the server.
+- Prequisites: npm (you can download Nodejs from https://nodejs.org/en/download/), chrome web browser.
+- Clone or download the repository to your machine.
+- Run 'npm install' in the directory of the repository to install all the necessary dependencies (open terminal in the directory and then run the command).
+- Run 'node index.js' in order to start the server (after the server boots it will show a message in the terminal).
 - To install the chrome plugin (in developer mode):
     1. Go to chrome://extensions/ and check the box for Developer mode in the top right.
     2. In the chrome://extensions/ page, click the Load unpacked extension button and select the unzipped folder of your extension to install it.
-- To use the extension you must first choose to register and then login. (for the extension to work properley refresh any web pages that were opened before login)
-- In order to gracefully shutdown the server you can click Ctrl-C in the terminal where the server runs.
+- To use the extension you must first choose to register (using your email and a valid password) and then login.
+  (for the extension to work properley refresh any web pages that were opened before login to the extension).
+- In order to gracefully shutdown the server you can click Ctrl-C in the terminal where the server runs (ensures all the data will be saved to disk).
+- To delete your information from the service just enter your login information in the main screen of the plugin and then choose the delete option.
+- When registering or when logged in, you can use the built-in password generator for quick and strong randomized passwords.
