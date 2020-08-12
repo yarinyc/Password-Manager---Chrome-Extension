@@ -21,7 +21,7 @@ If any of a user's data (any part of his domains, usernames or passwords) is alt
 - Currently the extension supports the following websites: Facebook, LinkedIn, Yad2.
 
 ## How To Install:
-- Prequisites: npm (you can download Nodejs from https://nodejs.org/en/download/), chrome web browser.
+- prerequisites: npm (you can download Nodejs from https://nodejs.org/en/download/), chrome web browser.
 - Clone or download the repository to your machine.
 - Run 'npm install' in the directory of the repository to install all the necessary dependencies (open terminal in the directory and then run the command).
 - Run 'node index.js' in order to start the server (after the server boots it will show a message in the terminal).
